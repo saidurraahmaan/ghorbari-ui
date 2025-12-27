@@ -12,10 +12,10 @@ export const useAuthStore = create<AuthStore>()(
       isLoading: false,
 
       // Actions
-      setAuth: (user: User, token: string) => {
+      setAuth: (token: string, user: User) => {
         set({
-          user,
           token,
+          user,
           isAuthenticated: true,
           isLoading: false,
         });

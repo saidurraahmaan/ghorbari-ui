@@ -13,7 +13,7 @@ export const useRegister = () => {
       setLoading(true);
     },
     onSuccess: (data) => {
-      setAuth(data.user, data.token);
+      setAuth(data.token, data.user);
     },
     onError: (error) => {
       setLoading(false);

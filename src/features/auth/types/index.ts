@@ -1,9 +1,8 @@
 export interface User {
-  id: string;
+  id: number;
+  username: string;
   email: string;
-  name: string;
-  role?: string;
-  avatar?: string;
+  roles: string[];
 }
 
 export interface AuthState {
@@ -14,7 +13,7 @@ export interface AuthState {
 }
 
 export interface AuthActions {
-  setAuth: (user: User, token: string) => void;
+  setAuth: (token: string, user: User) => void;
   clearAuth: () => void;
   setLoading: (isLoading: boolean) => void;
 }
@@ -27,12 +26,12 @@ export interface LoginCredentials {
 export interface RegisterCredentials {
   email: string;
   password: string;
-  name: string;
+  username: string;
 }
 
 export interface AuthResponse {
-  user: User;
   token: string;
+  user: User;
 }
 
 export type AuthStore = AuthState & AuthActions;

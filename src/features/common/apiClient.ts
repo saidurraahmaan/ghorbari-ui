@@ -23,7 +23,7 @@ apiClient.interceptors.request.use(
     // Get tenant ID from tenant store
     const tenantId = useTenantStore.getState().tenantId;
     if (tenantId && config.headers) {
-      config.headers['X-Tenant-ID'] = tenantId;
+      config.headers['X-Tenant-Key'] = tenantId;
     }
 
     return config;
