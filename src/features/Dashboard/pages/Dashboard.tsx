@@ -1,24 +1,11 @@
-import { useAuth, useLogout } from '@/features/auth/hooks';
-import { Button } from '@/components/ui/button';
+import { useAuth } from '@/features/auth/hooks';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const Dashboard = () => {
   const { user } = useAuth();
-  const { mutate: logout, isPending } = useLogout();
-
-  const handleLogout = () => {
-    logout();
-  };
 
   return (
-    <div className="container mx-auto p-6">
-      <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-3xl font-bold">Dashboard</h1>
-        <Button onClick={handleLogout} variant="outline" disabled={isPending}>
-          {isPending ? 'Logging out...' : 'Logout'}
-        </Button>
-      </div>
-
+    <div className="space-y-6">
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         <Card>
           <CardHeader>
@@ -28,14 +15,14 @@ export const Dashboard = () => {
           <CardContent>
             <div className="space-y-2">
               <p>
-                <span className="font-semibold">Name:</span> {user?.name}
+                <span className="font-semibold">Username:</span> {user?.username}
               </p>
               <p>
                 <span className="font-semibold">Email:</span> {user?.email}
               </p>
-              {user?.role && (
+              {user?.roles && user.roles.length > 0 && (
                 <p>
-                  <span className="font-semibold">Role:</span> {user.role}
+                  <span className="font-semibold">Roles:</span> {user.roles.join(', ')}
                 </p>
               )}
             </div>
