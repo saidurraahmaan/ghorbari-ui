@@ -3,10 +3,11 @@ import { RootLayout } from '@/components/layouts/RootLayout';
 import { AuthLayout } from '@/components/layouts/AuthLayout';
 import { DashboardLayout } from '@/components/layouts/DashboardLayout';
 import { ProtectedRoute } from '@/components/auth/ProtectedRoute';
-import { Login } from '@/features/auth/pages/Login';
+import { LoginPage } from '@/features/auth/pages/LoginPage';
 import { Register } from '@/features/auth/pages/Register';
 import { Dashboard } from '@/features/dashboard/pages/Dashboard';
 import { BuildingList } from '@/features/building/pages/BuildingList';
+import { AddBuilding } from '@/features/building/pages/AddBuilding';
 import { NotFound } from '@/features/common/pages/NotFound';
 
 export const router = createBrowserRouter([
@@ -23,7 +24,7 @@ export const router = createBrowserRouter([
         children: [
           {
             path: 'login',
-            element: <Login />,
+            element: <LoginPage />,
           },
           {
             path: 'register',
@@ -44,6 +45,10 @@ export const router = createBrowserRouter([
               {
                 path: 'buildings',
                 element: <BuildingList />,
+              },
+              {
+                path: 'buildings/add',
+                element: <AddBuilding />,
               },
               // Add more protected routes here
             ],

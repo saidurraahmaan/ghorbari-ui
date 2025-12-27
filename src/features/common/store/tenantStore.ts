@@ -1,15 +1,15 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
+import { type Tenant } from '../types';
 
 export interface TenantState {
   tenantId: string | null;
-  // Optional: Add these back later if you need tenant-specific customization
-  // tenantName: string | null;
-  // tenantConfig: Record<string, unknown> | null;
+  tenantInfo: Tenant | null;
 }
 
 export interface TenantActions {
   setTenant: (tenantId: string) => void;
+  setTenantInfo: (tenantInfo: Tenant) => void;
   clearTenant: () => void;
 }
 
@@ -20,14 +20,19 @@ export const useTenantStore = create<TenantStore>()(
     (set) => ({
       // Initial state
       tenantId: null,
+      tenantInfo: null,
 
       // Actions
       setTenant: (tenantId: string) => {
         set({ tenantId });
       },
 
+      setTenantInfo: (tenantInfo: Tenant) => {
+        set({ tenantInfo, tenantId: tenantInfo.tenantKey });
+      },
+
       clearTenant: () => {
-        set({ tenantId: null });
+        set({ tenantId: null, tenantInfo: null });
       },
     }),
     {
