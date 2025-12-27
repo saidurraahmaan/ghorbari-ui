@@ -1,4 +1,6 @@
 import axios, { type AxiosError, type InternalAxiosRequestConfig } from 'axios';
+import { useAuthStore } from '@/features/auth/store/authStore';
+import { useTenantStore } from '@/features/common/store/tenantStore';
 
 // Create axios instance with default config
 export const apiClient = axios.create({
@@ -9,23 +11,19 @@ export const apiClient = axios.create({
   },
 });
 
-// Request interceptor - Add auth token to requests
+// Request interceptor - Add auth token and tenant ID to requests
 apiClient.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    // Get token from localStorage
-    const authStorage = localStorage.getItem('auth-storage');
+    // Get token from auth store
+    const token = useAuthStore.getState().token;
+    if (token && config.headers) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
 
-    if (authStorage) {
-      try {
-        const { state } = JSON.parse(authStorage);
-        const token = state?.token;
-
-        if (token && config.headers) {
-          config.headers.Authorization = `Bearer ${token}`;
-        }
-      } catch (error) {
-        console.error('Error parsing auth storage:', error);
-      }
+    // Get tenant ID from tenant store
+    const tenantId = useTenantStore.getState().tenantId;
+    if (tenantId && config.headers) {
+      config.headers['X-Tenant-ID'] = tenantId;
     }
 
     return config;
@@ -47,11 +45,8 @@ apiClient.interceptors.response.use(
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
-      // Clear auth storage on 401
-      localStorage.removeItem('auth-storage');
-
-      // Redirect to login page or emit event
-      window.dispatchEvent(new CustomEvent('auth:unauthorized'));
+      // Clear auth from store on 401
+      useAuthStore.getState().clearAuth();
 
       return Promise.reject(error);
     }
