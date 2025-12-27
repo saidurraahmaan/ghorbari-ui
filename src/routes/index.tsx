@@ -1,6 +1,7 @@
 import { createBrowserRouter, Navigate } from 'react-router';
 import { RootLayout } from '@/components/layouts/RootLayout';
 import { AuthLayout } from '@/components/layouts/AuthLayout';
+import { DashboardLayout } from '@/components/layouts/DashboardLayout';
 import { ProtectedRoute } from '@/components/auth/ProtectedRoute';
 import { Login } from '@/features/auth/pages/Login';
 import { Register } from '@/features/auth/pages/Register';
@@ -33,10 +34,15 @@ export const router = createBrowserRouter([
         element: <ProtectedRoute />,
         children: [
           {
-            path: 'dashboard',
-            element: <Dashboard />,
+            element: <DashboardLayout />,
+            children: [
+              {
+                path: 'dashboard',
+                element: <Dashboard />,
+              },
+              // Add more protected routes here
+            ],
           },
-          // Add more protected routes here
         ],
       },
       {
