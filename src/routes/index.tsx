@@ -8,6 +8,8 @@ import { Register } from '@/features/auth/pages/Register';
 import { Dashboard } from '@/features/dashboard/pages/Dashboard';
 import { BuildingList } from '@/features/building/pages/BuildingList';
 import { AddBuilding } from '@/features/building/pages/AddBuilding';
+import { ApartmentsPage } from '@/features/apartment/pages/ApartmentsPage';
+import { AddApartment } from '@/features/apartment/pages/AddApartment';
 import { NotFound } from '@/features/common/pages/NotFound';
 
 export const router = createBrowserRouter([
@@ -49,6 +51,14 @@ export const router = createBrowserRouter([
               {
                 path: 'buildings/add',
                 element: <AddBuilding />,
+              },
+              {
+                path: 'apartments',
+                element: <ApartmentsPage />,
+              },
+              {
+                path: 'apartments/add',
+                element: <AddApartment />,
               },
               // Add more protected routes here
             ],
